@@ -122,8 +122,8 @@ public class NewOutgoingCallIntentBroadcaster {
                         disconnectTimeout = getDisconnectTimeoutFromApp(
                                 getResultExtras(false), disconnectTimeout);
                         endEarly = true;
-                    } else if (TelephonyUtil.isPotentialLocalEmergencyNumber(
-                            mPhoneNumberUtilsAdapter, mContext, resultNumber)) {
+                    } else if (mPhoneNumberUtilsAdapter.isPotentialLocalEmergencyNumber(
+                            mContext, resultNumber)) {
                         Log.w(this, "Cannot modify outgoing call to emergency number %s.",
                                 resultNumber);
                         disconnectTimeout = 0;
@@ -132,7 +132,7 @@ public class NewOutgoingCallIntentBroadcaster {
 
                     if (endEarly) {
                         if (mCall != null) {
-                            mCall.disconnect(disconnectTimeout);
+                            mCall.disconnect(true /* wasViaNewOutgoingCall */);
                         }
                         return;
                     }
@@ -144,9 +144,10 @@ public class NewOutgoingCallIntentBroadcaster {
                         return;
                     }
 
-                    boolean isSkipSchemaParsing = mIntent.getBooleanExtra(
-                            TelephonyProperties.EXTRA_SKIP_SCHEMA_PARSING, false);
-                    Uri resultHandleUri = null;
+                    Uri resultHandleUri = Uri.fromParts(
+                            mPhoneNumberUtilsAdapter.isUriNumber(resultNumber) ?
+                                    PhoneAccount.SCHEME_SIP : PhoneAccount.SCHEME_TEL,
+                            resultNumber, null);
                     Uri originalUri = mIntent.getData();
                     if (isSkipSchemaParsing) {
                         // resultNumber does not have the schema present
