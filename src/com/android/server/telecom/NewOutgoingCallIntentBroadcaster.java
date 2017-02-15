@@ -132,7 +132,7 @@ public class NewOutgoingCallIntentBroadcaster {
 
                     if (endEarly) {
                         if (mCall != null) {
-                            mCall.disconnect(true /* wasViaNewOutgoingCall */);
+                            mCall.disconnect(disconnectTimeout);
                         }
                         return;
                     }
