@@ -31,10 +31,14 @@
     <string name="ui_default_package" translatable="false">com.android.dialer</string>
 
     <!-- Class name for the default in-call UI Service [DO NOT TRANSLATE] -->
-    <string name="incall_default_class" translatable="false">com.android.incallui.InCallServiceImpl</string>
+    <string-array name="incall_default_classes" translatable="false">
+        <item>com.android.dialer/com.android.incallui.InCallServiceImpl</item>
+        <item>com.google.android.dialer/com.android.incallui.InCallServiceImpl</string>
 
     <!-- Class name for the default main dialer activity [DO NOT TRANSLATE] -->
-    <string name="dialer_default_class" translatable="false">com.android.dialer.DialtactsActivity</string>
+    <string-array name="dialer_default_classes" translatable="false">
+        <item>com.android.dialer/com.android.dialer.DialtactsActivity</item>
+        <item>com.google.android.dialer/com.google.android.dialer.extensions.GoogleDialtactsActivity</string>
 
     <!-- Flag indicating if the tty is enabled -->
     <bool name="tty_enabled">true</bool>
@@ -49,4 +53,5 @@
 
     <!-- DTMF key to be used for LCH hold tone -->
     <string name="lch_dtmf_key" translatable="false">D</string>
+
 </resources>
